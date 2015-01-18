@@ -389,21 +389,8 @@ class Cdr extends Modules{
 					header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 					header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 					header('Content-Disposition: attachment;filename="' . $record['recordings']['format'][$format]['filename'].'"');
-					$buffer = 1024 * 8;
-					$wstart = 0;
-					ob_end_clean();
-					ob_start();
-					while(true) {
-						$content = $this->UCP->FreePBX->Cdr->readRecordingBinaryByRecordingIDExtension($msgid,$ext,$format,$wstart,$buffer);
-						if(!$content) {
-							break;
-						}
-						echo $content;
-						ob_flush();
-						flush();
-						$wstart = $wstart + $buffer;
-						set_time_limit(0);
-					}
+
+					readfile($file)
 				}
 			}
 		}
